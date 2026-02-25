@@ -26,4 +26,15 @@ pd.set_option('display.width', 1000)
 pd.set_option('display.max_rows', None)
 
 
+#print("\nDuplicates before:", df.duplicated().sum())
+#df = df.drop_duplicates(subset=["Job Title", "Company"])
+df = df.drop_duplicates()
+
+df["Region"] = df["Location"].str.split(",").str[0].str.strip()
+df = df[df["Avg_Salary"] < 200000]
+df["Date Posted"] = pd.to_datetime(df["Date Posted"], errors="coerce")
+
+
 print(df)
+df.to_csv("data/cleaned_jobs.csv", index=False)
+#print(df.dtypes)
